@@ -1,8 +1,8 @@
 from ConexionDB import *
 
-# print("Turistas:")
-# for turista in collection_turistas.find():
-#     print(turista)
+print("Turistas:")
+for turista in collection_turistas.find():
+    print(turista)
 
 #Listar por id
 # print("Turistas:")

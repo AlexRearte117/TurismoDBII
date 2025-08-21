@@ -2,7 +2,7 @@ from turista import turista
 from pymongo import MongoClient
 
 #URL de MongoDB
-client = MongoClient("mongodb+srv://grearte:xS8fu8gVPAz9qGWm@cluster0.dffoict.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://reartefalex:EGkGmPDP4KkkyuIU@cluster0.jg7mg15.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 #Seleccionar la db
 db = client['Turismo']
 #Seleccionar la colección
@@ -21,3 +21,6 @@ print("turistas por provincia: ")
 turista.obtener_turistas_por_provincia("La Rioja")
 print("turistas por comentarios: ")
 turista.obtener_turistas_por_comentarios("None")
+
+#from turista import turista_for_dao
+#turista_for_dao.lugar_mas_visitado()
