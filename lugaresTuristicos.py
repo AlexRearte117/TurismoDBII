@@ -222,3 +222,82 @@ class lugares_for_dao:
     #         return lugar_maximo, max_comentarios
     #     else:
     #         return None, 0
+
+    @staticmethod
+    def mostrar_visitas_y_comentarios():
+        """Muestra todos los turistas, qué lugares visitaron y sus comentarios"""
+        print("🔍 REPORTE COMPLETO DE VISITAS Y COMENTARIOS")
+        print("=" * 80)
+        
+        # Obtener todos los turistas con comentarios
+        turistas_con_comentarios = collection_turistas.find({
+            "comentario": {"$exists": True, "$ne": ""}
+        })
+        
+        if not turistas_con_comentarios:
+            print("❌ No hay turistas con comentarios registrados.")
+            return
+        
+        contador = 0
+        for turista in turistas_con_comentarios:
+            contador += 1
+            print(f"\n👤 TURISTA #{contador}")
+            print(f"   📝 ID: {turista.get('_id', 'N/A')}")
+            print(f"   👨‍💼 Nombre: {turista.get('nombre', 'N/A')} {turista.get('apellido', 'N/A')}")
+            print(f"   🏠 Provincia: {turista.get('provincia', 'N/A')}")
+            print(f"   🗓️ Fecha: {turista.get('fecha_hora', 'Sin fecha')}")
+            print(f"   🏛️ Lugar visitado: {turista.get('lugar_nombre', 'N/A')}")
+            print(f"   💬 Comentario: '{turista.get('comentario', 'N/A')}'")
+            print("-" * 60)
+        
+        print(f"\n📊 RESUMEN:")
+        print(f"   Total de turistas con comentarios: {contador}")
+        
+        # Contar por lugar
+        lugares_visitados = {}
+        for turista in collection_turistas.find({"comentario": {"$exists": True, "$ne": ""}}):
+            lugar = turista.get('lugar_nombre', 'Desconocido')
+            if lugar not in lugares_visitados:
+                lugares_visitados[lugar] = 0
+            lugares_visitados[lugar] += 1
+        
+        print(f"   Visitas por lugar:")
+        for lugar, visitas in lugares_visitados.items():
+            print(f"     • {lugar}: {visitas} visitas")
+        
+        return contador
+
+    @staticmethod
+    def mostrar_comentarios_por_lugar(lugar_id):
+        """Muestra todos los comentarios de un lugar específico"""
+        lugar = collection_lugares.find_one({"_id": lugar_id})
+        
+        if not lugar:
+            print(f"❌ No se encontró el lugar con ID {lugar_id}")
+            return
+        
+        print(f"🏛️ COMENTARIOS DEL LUGAR: {lugar.get('nombre', 'Sin nombre')}")
+        print("=" * 60)
+        
+        # Buscar turistas que visitaron este lugar
+        turistas_lugar = collection_turistas.find({
+            "lugar_id": lugar_id,
+            "comentario": {"$exists": True, "$ne": ""}
+        })
+        
+        comentarios = list(turistas_lugar)
+        
+        if not comentarios:
+            print("❌ No hay comentarios para este lugar.")
+            return
+        
+        for i, turista in enumerate(comentarios, 1):
+            print(f"\n💬 COMENTARIO #{i}")
+            print(f"   👤 Por: {turista.get('nombre', 'N/A')} {turista.get('apellido', 'N/A')}")
+            print(f"   🏠 Provincia: {turista.get('provincia', 'N/A')}")
+            print(f"   🗓️ Fecha: {turista.get('fecha_hora', 'Sin fecha')}")
+            print(f"   💭 Comentario: '{turista.get('comentario', 'N/A')}'")
+            print("-" * 40)
+        
+        print(f"\n📊 Total de comentarios: {len(comentarios)}")
+        return len(comentarios)

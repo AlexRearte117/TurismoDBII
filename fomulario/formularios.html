@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deja tu Comentario - Destinos Turísticos</title>
+    <link rel="stylesheet" href="formulario.css">
+</head>
+<body>
+    <div class="content-wrapper">      
+        <h1>Deja tu Comentario</h1>
+        <h3>Comparte tu experiencia en nuestros destinos turísticos</h3>
+        
+        <div class="form-container">
+            <form id="comentarioForm">
+                <div class="form-group">
+                    <label for="lugar">Selecciona el lugar visitado:</label>
+                    <select id="lugar" name="lugar" required onchange="actualizarLugarInfo()">
+                        <option value="">-- Selecciona un destino --</option>
+                        <option value="1">🏛️ Plaza Principal</option>
+                        <option value="2">⛰️ Cristo de Portezuelo</option>
+                    </select>
+                </div>
+
+                <div id="lugarInfo" class="lugar-info" style="display: none;">
+                    <h3 id="lugarNombre"></h3>
+                    <p id="lugarDescripcion"></p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="provincia">Provincia:</label>
+                    <input type="text" id="provincia" name="provincia" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comentario">Tu Comentario:</label>
+                    <textarea id="comentario" name="comentario" placeholder="Cuéntanos qué te pareció el lugar..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar Comentario</button>
+            </form>
+            
+            <div id="successMessage" class="success-message">
+                ¡Comentario enviado exitosamente! Gracias por compartir tu experiencia.
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                Hubo un error al enviar el comentario. Por favor, intenta nuevamente.
+            </div>
+            
+            <a href="javascript:history.back()" class="back-btn">← Volver</a>
+        </div>
+    </div>
+
+    <script>
+        const lugares = {
+            1: {
+                nombre: "Plaza Principal",
+                descripcion: "El corazón histórico de Chilecito, conocida como 'Caudillos Federales'"
+            },
+            2: {
+                nombre: "Cristo de Portezuelo",
+                descripcion: "Majestuosa estatua con vistas panorámicas espectaculares de la ciudad"
+            }
+        };
+
+        function actualizarLugarInfo() {
+            const lugarSelect = document.getElementById('lugar');
+            const lugarInfo = document.getElementById('lugarInfo');
+            const lugarNombre = document.getElementById('lugarNombre');
+            const lugarDescripcion = document.getElementById('lugarDescripcion');
+            
+            if (lugarSelect.value) {
+                const lugar = lugares[lugarSelect.value];
+                lugarNombre.textContent = lugar.nombre;
+                lugarDescripcion.textContent = lugar.descripcion;
+                lugarInfo.style.display = 'block';
+            } else {
+                lugarInfo.style.display = 'none';
+            }
+        }
+
+        document.getElementById('comentarioForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const lugarSelect = document.getElementById('lugar');
+            if (!lugarSelect.value) {
+                alert('Por favor selecciona un lugar turístico');
+                return;
+            }
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                provincia: document.getElementById('provincia').value,
+                comentario: document.getElementById('comentario').value,
+                lugar_id: parseInt(lugarSelect.value),
+                lugar_nombre: lugares[lugarSelect.value].nombre
+            };
+            
+            try {
+                const response = await fetch('/api/comentario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    document.getElementById('comentarioForm').reset();
+                    document.getElementById('lugarInfo').style.display = 'none';
+                } else {
+                    throw new Error('Error en el servidor');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

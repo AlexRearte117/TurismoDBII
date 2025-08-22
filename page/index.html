@@ -1,56 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR de Plaza Principal</title>
+    <title>Chilecito - Destinos Turísticos</title>
     <link rel="stylesheet" href="page.css">
 </head>
-
 <body>
-    <div class="content-wrapper">
-        <div class="logo-container">
-            <img src="ISOLOGO_UNdeC_COLOR.png" alt="Logo de Universidad Nacional de Chilecito">
-        </div>
-        <h1>Plaza Principal</h1>
-        <h3>Fue fundada el 19 de febrero de 1715 por el español Domingo de Castro y Bazán,
-            inicialmente bajo el nombre de Villa Santa Rita, luego cambió a Villa Argentina y finalmente a Chilecito.
-        </h3>
-
-        <div class="image-container">
-            <img src="plaza.jpg" alt="Vista de la Plaza Principal">
-        </div>
-
-        <h3>
-            Particularmente, se destaca la plaza principal, llamada Caudillos Federales, con una frondosa arboleda y el
-            centro despejado. Esta es además, un sitio tradicional para la Bendición de Frutos que inaugura La Chaya en
-            el
-            popular carnaval riojano, los febrero de cada año.
-        </h3>
-
-        <h3>
-            La ciudad se encuentra emplazada sobre un gran valle, al pie de la Sierra de Famatina, entre dicha Sierra y
-            las
-            de Velasco. Dicha zona es una importante región turística y productiva, rodeada de extensos viñedos y
-            olivares.
-        </h3>
-
-        <div class="image-container">
-            <img src="plaza2.jpg" alt="Otra vista de la Plaza Principal">
+    <div class="container">
+        <div class="presentation">
+            <h2>🏛️ Bienvenidos a Chilecito</h2>
+            <p>
+                Descubre la belleza y la historia de esta encantadora ciudad de La Rioja, 
+                donde la tradición se encuentra con la modernidad. Chilecito te invita a 
+                explorar sus paisajes únicos, su rica cultura y sus destinos turísticos 
+                más emblemáticos.
+            </p>
+            <p>
+                Desde la majestuosa Plaza Principal hasta el imponente Cristo de Portezuelo, 
+                cada rincón de esta ciudad tiene una historia que contar y una experiencia 
+                única que ofrecer. Sumérgete en la autenticidad riojana y crea recuerdos 
+                inolvidables en cada visita.
+            </p>
         </div>
 
-        <a href="https://www.google.com/maps/dir/?api=1&destination=-29.164980,-67.495267" class="cta-button">¿Cómo
-            llegar a la Plaza Principal?</a>
-        <h2>Deja tu comentario</h2>
-        <form id="comentario-form" method="post" action="/enviar_comentario">
-            <textarea name="comentario" rows="4" cols="50" placeholder="Escribe tu comentario aquí..."
-                required></textarea>
-            <br>
-            <button type="submit" class="cta-button">Enviar Comentario</button>
-        </form>
-        <div id="visitas-info"></div>
+        <div class="destinos-grid">
+            <!-- Tarjeta Plaza Principal -->
+            <a href="../paginawebPlaza/plaza.html" class="destino-card">
+                <div class="card-image" style="background-image: url('https://i.pinimg.com/736x/75/53/f0/7553f0ec697302ec3f87707fd003caa9.jpg');">
+                </div>
+                <div class="card-content">
+                    <h3>🏛️ Plaza Principal</h3>
+                    <p>
+                        El corazón histórico de Chilecito, conocida como "Caudillos Federales". 
+                        Un espacio donde la historia se encuentra con la vida cotidiana, 
+                        rodeada de arquitectura colonial y árboles centenarios.
+                    </p>
+                    <span class="card-button">Explorar Plaza</span>
+                </div>
+            </a>
+
+            <!-- Tarjeta Cristo de Portezuelo -->
+            <a href="../paginawebCristo/cristo.html" class="destino-card">
+                <div class="card-image" style="background-image: url('https://i.pinimg.com/1200x/26/20/18/26201882ac04d578f446b60d960b6454.jpg');">
+                </div>
+                <div class="card-content">
+                    <h3>⛰️ Cristo de Portezuelo</h3>
+                    <p>
+                        Majestuoso guardián de Chilecito con vistas panorámicas espectaculares. 
+                        Desde las alturas del Portezuelo, contempla toda la belleza del valle 
+                        y las imponentes sierras que rodean la ciudad.
+                    </p>
+                    <span class="card-button">Visitar Cristo</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>🏛️ Universidad Nacional de Chilecito</p>
+            <p>📍 Chilecito, La Rioja, Argentina</p>
+            <p>🌐 <a href="https://undec.edu.ar" target="_blank">undec.edu.ar</a></p>
+        </div>
     </div>
 </body>
-
 </html>
